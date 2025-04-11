@@ -28,7 +28,7 @@ const SocialSidebar = () => {
     },
     {
       name: "Email",
-      href: "mailto:arindhimar@gmail.com",
+      href: "mailto:arindhimar.fc@gmail.com",
       icon: <Mail className="h-5 w-5" />,
       color: "hover:text-green-400 dark:hover:text-green-600",
     },

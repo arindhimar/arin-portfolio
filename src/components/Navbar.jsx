@@ -95,11 +95,10 @@ const Navbar = ({ activeSection, onSectionChange }) => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className={`fixed w-full z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-[#050A1C]/80 dark:bg-slate-100/80 backdrop-blur-md border-b border-violet-500/20"
-          : "bg-transparent"
-      }`}
+      className={`fixed w-full z-50 transition-all duration-300 ${scrolled
+        ? "bg-[#050A1C]/80 dark:bg-slate-100/80 backdrop-blur-md border-b border-violet-500/20"
+        : "bg-transparent"
+        }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
@@ -119,11 +118,10 @@ const Navbar = ({ activeSection, onSectionChange }) => {
                   key={link.id}
                   onClick={() => handleNavClick(link.id)}
                   variant={activeSection === link.id ? "ghost2" : "ghost"}
-                  className={`relative ${
-                    activeSection === link.id
-                      ? "text-violet-400 dark:text-violet-600"
-                      : "text-gray-300 dark:text-slate-700"
-                  }`}
+                  className={`relative ${activeSection === link.id
+                    ? "text-violet-400 dark:text-violet-600"
+                    : "text-gray-300 dark:text-slate-700"
+                    }`}
                 >
                   {link.name}
                   {activeSection === link.id && (
@@ -138,18 +136,6 @@ const Navbar = ({ activeSection, onSectionChange }) => {
             </div>
 
             <div className="flex items-center space-x-2 ml-4">
-              <Button
-                variant="outline2"
-                size="sm"
-                as="a"
-                href="/resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center"
-              >
-                <FileText className="mr-2 h-4 w-4" />
-                Resume
-              </Button>
 
               <Button
                 variant="ghost"
@@ -211,35 +197,17 @@ const Navbar = ({ activeSection, onSectionChange }) => {
                     <Button
                       onClick={() => handleNavClick(link.id)}
                       variant={activeSection === link.id ? "ghost2" : "ghost"}
-                      className={`w-full justify-start ${
-                        activeSection === link.id
-                          ? "text-violet-400 dark:text-violet-600"
-                          : "text-gray-300 dark:text-slate-700"
-                      }`}
+                      className={`w-full justify-start ${activeSection === link.id
+                        ? "text-violet-400 dark:text-violet-600"
+                        : "text-gray-300 dark:text-slate-700"
+                        }`}
                     >
                       {link.name}
                     </Button>
                   </motion.div>
                 ))}
 
-                <motion.div
-                  initial={{ x: -50, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: navLinks.length * 0.1, duration: 0.3 }}
-                  className="px-3 py-2"
-                >
-                  <Button
-                    variant="outline2"
-                    className="w-full justify-start"
-                    as="a"
-                    href="/resume.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <FileText className="mr-2 h-4 w-4" />
-                    Resume
-                  </Button>
-                </motion.div>
+
               </div>
             </div>
           </motion.div>

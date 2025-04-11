@@ -83,7 +83,7 @@ const CustomCursor = () => {
           y: position.y - 5,
           width: isClicking ? "12px" : "10px",
           height: isClicking ? "12px" : "10px",
-          backgroundColor: theme === "dark" ? "rgba(255, 255, 255, 0.9)" : "rgba(139, 92, 246, 0.9)",
+          backgroundColor: theme === "dark" ? "rgba(46, 25, 207, 0.9)" : "rgba(139, 92, 246, 0.9)",
         }}
         animate={{
           scale: isClicking ? 0.8 : 1,
@@ -99,7 +99,7 @@ const CustomCursor = () => {
           y: position.y - 24,
           borderWidth: "2px",
           borderStyle: "solid",
-          borderColor: theme === "dark" ? "rgba(255, 255, 255, 0.5)" : "rgba(139, 92, 246, 0.5)",
+          borderColor: theme === "dark" ? "rgba(236, 75, 75, 0.5)" : "rgba(139, 92, 246, 0.5)",
         }}
         animate={{
           width: isHovering ? "60px" : "40px",
@@ -108,8 +108,8 @@ const CustomCursor = () => {
           y: isHovering ? position.y - 30 : position.y - 20,
           opacity: isHovering ? 0.8 : 0.4,
           borderColor: isHovering 
-            ? theme === "dark" ? "rgba(255, 255, 255, 0.8)" : "rgba(139, 92, 246, 0.8)" 
-            : theme === "dark" ? "rgba(255, 255, 255, 0.5)" : "rgba(139, 92, 246, 0.5)",
+            ? theme === "dark" ? "rgba(236, 75, 75, 0.5)" : "rgba(139, 92, 246, 0.5)"
+            : theme === "dark" ? "rgba(236, 75, 75, 0.5)" : "rgba(139, 92, 246, 0.5)",
         }}
         transition={{ type: "spring", stiffness: 150, damping: 15 }}
       />

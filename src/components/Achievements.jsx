@@ -1,6 +1,6 @@
 "use client"
 
-import { Trophy, Award, Star, Target } from 'lucide-react'
+import { Trophy, Award, Star, Target ,Languages,Brain} from 'lucide-react'
 import { motion } from "framer-motion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -25,19 +25,20 @@ const Achievements = () => {
       borderColor: "border-blue-500/30",
     },
     {
-      title: "Top Performer",
-      description: "Recognized as a top performer in several local development contests.",
-      icon: <Star className="h-8 w-8 text-violet-500" />,
-      color: "bg-violet-500/10",
-      borderColor: "border-violet-500/30",
+      title: "Multilingual Integration",
+      description: "Integrated multilingual text-to-speech capabilities (English, Hindi, Marathi) in BookAura using Bhashini API.",
+      icon: <Languages className="h-8 w-8 text-rose-500" />,
+      color: "bg-rose-500/10",
+      borderColor: "border-rose-500/30",
     },
     {
-      title: "React Certification",
-      description: "Certified React developer via Udemy, demonstrating proficiency in modern React development.",
-      icon: <Target className="h-8 w-8 text-green-500" />,
-      color: "bg-green-500/10",
-      borderColor: "border-green-500/30",
-    },
+      title: "AI-Driven Automation",
+      description: "Implemented AI commit summarization and auto social media sharing in Dev-Litics to streamline developer branding.",
+      icon: <Brain className="h-8 w-8 text-purple-500" />,
+      color: "bg-purple-500/10",
+      borderColor: "border-purple-500/30",
+    }
+    
   ]
 
   const container = {
@@ -137,7 +138,7 @@ const Achievements = () => {
                 <div className="flex items-center">
                   <div className="w-4 h-4 rounded-full bg-gradient-to-r from-violet-400 to-indigo-500 mr-3"></div>
                   <p className="text-gray-300 dark:text-slate-600">
-                    Custom compilers/tokenizers (working on SQL syntax checker)
+                    Web-3 and solana integration (smart contracts, dApps)
                   </p>
                 </div>
               </div>

@@ -204,18 +204,21 @@ const Hero = () => {
                 See My Activity
               </Button>
 
-              <Button
-                variant="outline2"
-                size="lg"
-                as="a"
-                href="/resume.pdf"
+              <a
+                href="https://drive.google.com/file/d/1miSW2m7sjjUmjaaNaWWdxuuPRiPSb6yF/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center"
               >
-                <FileText className="mr-2 h-4 w-4" />
-                Resume
-              </Button>
+                <Button
+                  variant="outline2"
+                  size="lg"
+                  className="flex items-center"
+                >
+                  <FileText className="mr-2 h-4 w-4" />
+                  Resume
+                </Button>
+              </a>
+
             </motion.div>
           </motion.div>
 
