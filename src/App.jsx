@@ -14,6 +14,7 @@ import { ThemeProvider } from "./components/ThemeProvider"
 import ParticlesBackground from "./components/ParticlesBackground"
 import GithubActivity from "./components/GithubActivity"
 import SocialSidebar from "./components/SocialSidebar"
+import QuoteSection from "./components/QuoteSection"
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
@@ -47,6 +48,7 @@ function App() {
               <SocialSidebar />
               <main>
                 <Hero />
+                <QuoteSection />
                 <Skills />
                 <Projects />
                 <GithubActivity />

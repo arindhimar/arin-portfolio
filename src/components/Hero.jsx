@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { ArrowDown, ExternalLink, FileText } from 'lucide-react'
+import { ArrowDown, ExternalLink, FileText } from "lucide-react"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -152,12 +152,17 @@ const Hero = () => {
               <Badge variant="subtle" className="mb-4">
                 Available for Freelance
               </Badge>
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4">
+              <motion.h1
+                className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+              >
                 <span className="block text-white dark:text-slate-800 mb-2">Hi, I'm</span>
                 <span className="bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">
                   Arin Dhimar
                 </span>
-              </h1>
+              </motion.h1>
             </motion.div>
 
             <motion.h2
@@ -209,16 +214,11 @@ const Hero = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Button
-                  variant="outline2"
-                  size="lg"
-                  className="flex items-center"
-                >
+                <Button variant="outline2" size="lg" className="flex items-center">
                   <FileText className="mr-2 h-4 w-4" />
                   Resume
                 </Button>
               </a>
-
             </motion.div>
           </motion.div>
 

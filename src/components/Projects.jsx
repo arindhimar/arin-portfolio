@@ -1,7 +1,5 @@
 "use client"
-
-import React from "react"
-import { Github } from "lucide-react"
+import { Github, ExternalLink } from "lucide-react"
 import { motion } from "framer-motion"
 import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
@@ -16,14 +14,14 @@ const projects = [
     image: "https://i.ibb.co/tMh8s4zQ/ANIMEX.jpg",
     tags: ["React", "Tailwind CSS", "Flask", "MySQL", "FFmpeg", "HLS", "MVC", "Rest-API"],
     demoLink: "#",
-    codeLink: "https://github.com/arindhimar",
+    codeLink: "https://github.com/arindhimar/VideoStreamingPlatform",
     features: [
       "HLS Streaming with FFmpeg",
       "Background video processing using Python threads",
       "Genre, Anime & Episode Management",
       "Real-time search and inline editing",
       "RESTful Flask APIs with MVC structure",
-      "Secure file uploads & queue system"
+      "Secure file uploads & queue system",
     ],
     color: "from-violet-600 to-fuchsia-600",
   },
@@ -35,7 +33,7 @@ const projects = [
     image: "https://i.ibb.co/Nd1Lgt8F/devlitisc.png",
     tags: ["VS Code Extension", "JavaScript", "React", "Flask", "ShadCn", "Tailwind CSS", "MySQL", "Rest-API"],
     demoLink: "#",
-    codeLink: "https://github.com/arindhimar",
+    codeLink: "https://github.com/arindhimar/DevLitics",
     features: [
       "Tracks coding time, language, and project automatically",
       "In-memory tracking with 3–4 sec idle detection",
@@ -82,12 +80,31 @@ const projects = [
       "Categorized and searchable library",
       "Responsive pixel-perfect UI with theme toggle",
       "PDF reader and integrated recommendation engine",
-      "Marathi/Hindi speech synthesis via Bhashini API (planned)"
+      "Marathi/Hindi speech synthesis via Bhashini API (planned)",
     ],
-    color: "from-indigo-600 to-purple-600"
-  }
+    color: "from-indigo-600 to-purple-600",
+  },
+  {
+    id: 5,
+    title: "ContextCraft",
+    description:
+      "An MCP-powered AI trading assistant that lets Claude (or any MCP agent) execute live Zerodha Kite orders using natural commands like 'Buy 5 INFY at market price'. Designed for extensibility with FastMCP and secure token-based trading.",
+    image: "https://i.ibb.co/BGVKwTg/contextcraft-cover.jpg",
+    tags: ["Python", "MCP", "FastMCP", "KiteConnect", "Claude", "CLI", "Rest-API"],
+    demoLink: "#",
+    codeLink: "https://github.com/arindhimar/ContextCraft",
+    features: [
+      "FastMCP server with Claude-compatible tools",
+      "Buy and sell via natural language prompts",
+      "Price interpreted as float or 'market'",
+      "Auto-fetches tradingsymbol and market type",
+      "Integrated with Zerodha's KiteConnect API",
+      "Production-ready with uv run/mcp dev",
+      "Expandable with more tools like holdings, orders, etc.",
+    ],
+    color: "from-yellow-600 to-amber-500",
+  },
 ]
-
 
 export default function ProjectsGrid() {
   return (
@@ -95,12 +112,13 @@ export default function ProjectsGrid() {
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
-          <Badge variant="subtle" className="mb-2 bg-violet-500/20 text-violet-400 dark:bg-slate-800/50 dark:text-violet-500">
+          <Badge
+            variant="subtle"
+            className="mb-2 bg-violet-500/20 text-violet-400 dark:bg-violet-500/20 dark:text-violet-600"
+          >
             My Work
           </Badge>
-          <h2 className="text-4xl font-bold text-white dark:text-slate-800">
-            Featured Projects
-          </h2>
+          <h2 className="text-4xl font-bold text-white dark:text-slate-800">Featured Projects</h2>
           <p className="text-gray-300 dark:text-slate-600 max-w-2xl mx-auto mt-4">
             A selection of my recent full‑stack projects, each built with modern tools and best practices.
           </p>
@@ -109,58 +127,56 @@ export default function ProjectsGrid() {
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((proj, idx) => (
-            <motion.div
-              key={idx}
-              whileHover={{ scale: 1.03 }}
-              className="relative"
-            >
-              <Card className="overflow-hidden bg-[#050A1C]/30 dark:bg-slate-100/20 backdrop-blur-sm border border-slate-800/50 dark:border-slate-100/20">
-                {/* Image */}
-                <div className="aspect-video w-full bg-black/10">
-                  <div
-                    className="w-full h-full bg-center bg-cover"
-                    style={{ backgroundImage: `url(${proj.image})` }}
-                  />
-                </div>
-
-                {/* Content */}
-                <div className="p-6">
-                  <h3 className="text-2xl font-semibold mb-2 text-white dark:text-slate-800">
-                    {proj.title}
-                  </h3>
-                  <p className="text-gray-300 dark:text-slate-600 mb-4">
-                    {proj.description}
-                  </p>
-
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {proj.tags.map((tag, i) => (
-                      <Badge
-                        key={i}
-                        variant="outline"
-                        className="text-gray-100 dark:text-slate-500 border-gray-400/50 dark:border-slate-500/50"
-                      >
-                        {tag}
-                      </Badge>
-                    ))}
+            <motion.div key={idx} whileHover={{ scale: 1.03 }} className="relative">
+              <a href={proj.codeLink} target="_blank" rel="noopener noreferrer" className="block h-full">
+                <Card className="overflow-hidden bg-[#050A1C]/30 dark:bg-white/80 backdrop-blur-sm border border-slate-800/50 dark:border-slate-300/20 h-full transition-all duration-300 hover:shadow-lg hover:border-violet-500/30">
+                  {/* Image */}
+                  <div className="aspect-video w-full bg-black/10 relative group">
+                    <div
+                      className="w-full h-full bg-center bg-cover"
+                      style={{ backgroundImage: `url(${proj.image})` }}
+                    />
+                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <div className="bg-white/90 dark:bg-slate-800/90 text-slate-800 dark:text-white px-4 py-2 rounded-full flex items-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                        <Github className="h-4 w-4 mr-2" />
+                        <span className="font-medium">View on GitHub</span>
+                        <ExternalLink className="h-3.5 w-3.5 ml-1.5" />
+                      </div>
+                    </div>
                   </div>
 
-                  {/* Code Button */}
-                  <div className="flex">
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      className="w-full border-gray-400/50 text-gray-100 hover:bg-gray-400/20 dark:border-slate-500/50 dark:text-slate-600 dark:hover:bg-slate-100/20"
-                      asChild
-                    >
-                      <a href={proj.codeLink} target="_blank" rel="noopener noreferrer">
+                  {/* Content */}
+                  <div className="p-6">
+                    <h3 className="text-2xl font-semibold mb-2 text-white dark:text-slate-800">{proj.title}</h3>
+                    <p className="text-gray-300 dark:text-slate-600 mb-4">{proj.description}</p>
+
+                    {/* Tags */}
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {proj.tags.map((tag, i) => (
+                        <Badge
+                          key={i}
+                          variant="outline"
+                          className="bg-slate-800/80 text-white dark:bg-slate-200 dark:text-slate-800 border-gray-400/50 dark:border-slate-400/50"
+                        >
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+
+                    {/* View Code Button - Visual only, entire card is clickable */}
+                    <div className="flex">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="w-full border border-gray-400 text-gray-900 bg-white dark:bg-[#0f172a] dark:text-white hover:bg-gray-200 dark:hover:bg-slate-700 transition-all pointer-events-none"
+                      >
                         <Github className="h-4 w-4 mr-1" />
                         View Code
-                      </a>
-                    </Button>
+                      </Button>
+                    </div>
                   </div>
-                </div>
-              </Card>
+                </Card>
+              </a>
             </motion.div>
           ))}
         </div>

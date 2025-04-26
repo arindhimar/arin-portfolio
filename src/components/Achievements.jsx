@@ -1,6 +1,6 @@
 "use client"
 
-import { Trophy, Award, Star, Target ,Languages,Brain} from 'lucide-react'
+import { Trophy, Award, Languages, Brain } from "lucide-react"
 import { motion } from "framer-motion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -26,19 +26,20 @@ const Achievements = () => {
     },
     {
       title: "Multilingual Integration",
-      description: "Integrated multilingual text-to-speech capabilities (English, Hindi, Marathi) in BookAura using Bhashini API.",
+      description:
+        "Integrated multilingual text-to-speech capabilities (English, Hindi, Marathi) in BookAura using Bhashini API.",
       icon: <Languages className="h-8 w-8 text-rose-500" />,
       color: "bg-rose-500/10",
       borderColor: "border-rose-500/30",
     },
     {
       title: "AI-Driven Automation",
-      description: "Implemented AI commit summarization and auto social media sharing in Dev-Litics to streamline developer branding.",
+      description:
+        "Implemented AI commit summarization and auto social media sharing in Dev-Litics to streamline developer branding.",
       icon: <Brain className="h-8 w-8 text-purple-500" />,
       color: "bg-purple-500/10",
       borderColor: "border-purple-500/30",
-    }
-    
+    },
   ]
 
   const container = {

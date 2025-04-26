@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react"
 import { motion } from "framer-motion"
-import { Code, Server, Database, Globe, Palette, Cpu, BrainCircuit, Cloud, Layers, User, Send, Bug } from "lucide-react"
+import { Code, Server, Database, Layers, User, Send, Bug } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { useTheme } from "@/components/ThemeProvider"
 
@@ -40,7 +40,8 @@ const Skills = () => {
       icon: <Database className="h-10 w-10" />,
       color: "bg-gradient-to-br from-sky-500 to-blue-600",
       textColor: "text-white",
-      description: "Relational database design with structured schemas, SQL queries, indexing, and backend integration.",
+      description:
+        "Relational database design with structured schemas, SQL queries, indexing, and backend integration.",
     },
     {
       name: "Firebase",
@@ -57,14 +58,6 @@ const Skills = () => {
       color: "bg-gradient-to-br from-violet-500 to-purple-600",
       textColor: "text-white",
       description: "Authentication platform with pre-built UIs, social login, and integration with modern frameworks.",
-    },
-    {
-      name: "AI Integration",
-      short: "AI into Web Apps",
-      icon: <BrainCircuit className="h-10 w-10" />,
-      color: "bg-gradient-to-br from-violet-500 to-purple-600",
-      textColor: "text-white",
-      description: "Integrating AI models into apps using APIs, SDKs, and cloud AI platforms.",
     },
     {
       name: "Full-Stack Architecture",
