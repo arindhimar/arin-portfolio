@@ -1,12 +1,12 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Menu, X, Moon, Sun, FileText } from "lucide-react"
+import { Menu, X, Moon, Sun, ArrowLeft } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { useTheme } from "@/components/ThemeProvider"
 
-const Navbar = ({ activeSection, onSectionChange }) => {
+const Navbar = ({ activeSection, onSectionChange, isFunPage = false, onBack }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const { theme, toggleTheme } = useTheme()
@@ -19,44 +19,42 @@ const Navbar = ({ activeSection, onSectionChange }) => {
         setScrolled(false)
       }
 
-      // Check which section is currently in view
-      const sections = ["home", "skills", "projects", "github-activity", "achievements"]
+      // Only handle scroll-based section detection for portfolio page
+      if (!isFunPage) {
+        const sections = ["home", "skills", "projects", "github-activity", "achievements"]
+        let maxVisibleSection = null
+        let maxVisibleHeight = 0
 
-      // Find the section that takes up most of the viewport
-      let maxVisibleSection = null
-      let maxVisibleHeight = 0
+        for (const sectionId of sections) {
+          const section = document.getElementById(sectionId)
+          if (section) {
+            const rect = section.getBoundingClientRect()
+            const visibleHeight = Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0)
 
-      for (const sectionId of sections) {
-        const section = document.getElementById(sectionId)
-        if (section) {
-          const rect = section.getBoundingClientRect()
-          const visibleHeight = Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0)
-
-          if (visibleHeight > maxVisibleHeight && visibleHeight > 0) {
-            maxVisibleHeight = visibleHeight
-            maxVisibleSection = sectionId
+            if (visibleHeight > maxVisibleHeight && visibleHeight > 0) {
+              maxVisibleHeight = visibleHeight
+              maxVisibleSection = sectionId
+            }
           }
         }
-      }
 
-      if (maxVisibleSection && maxVisibleSection !== activeSection) {
-        onSectionChange(maxVisibleSection)
+        if (maxVisibleSection && maxVisibleSection !== activeSection) {
+          onSectionChange(maxVisibleSection)
+        }
       }
     }
 
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
-  }, [onSectionChange, activeSection])
+  }, [onSectionChange, activeSection, isFunPage])
 
   useEffect(() => {
-    // Close mobile menu when clicking outside
     const handleClickOutside = (event) => {
       if (isOpen && !event.target.closest(".mobile-menu") && !event.target.closest(".menu-button")) {
         setIsOpen(false)
       }
     }
 
-    // Prevent scrolling when mobile menu is open
     if (isOpen) {
       document.body.style.overflow = "hidden"
     } else {
@@ -72,22 +70,37 @@ const Navbar = ({ activeSection, onSectionChange }) => {
 
   const toggleMenu = () => setIsOpen(!isOpen)
 
-  // Simplified navigation links
-  const navLinks = [
-    { name: "Home", id: "home" },
-    { name: "Skills", id: "skills" },
-    { name: "Projects", id: "projects" },
-    { name: "GitHub", id: "github-activity" },
-    { name: "Achievements", id: "achievements" },
-  ]
+  // Navigation links based on page type
+  const navLinks = isFunPage
+    ? [
+        { name: "Hot Wheels", id: "hotwheels" },
+        { name: "Anime", id: "anime" },
+        { name: "Quotes", id: "quotes" },
+      ]
+    : [
+        { name: "Home", id: "home" },
+        { name: "Skills", id: "skills" },
+        { name: "Projects", id: "projects" },
+        { name: "GitHub", id: "github-activity" },
+        { name: "Achievements", id: "achievements" },
+      ]
 
   const handleNavClick = (id) => {
-    const element = document.getElementById(id)
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
+    console.log("Nav clicked:", id) // Debug log
+
+    if (isFunPage) {
+      // For fun page, just change the active section (no scrolling)
       onSectionChange(id)
-      if (isOpen) setIsOpen(false)
+    } else {
+      // Handle portfolio page navigation with scrolling
+      const element = document.getElementById(id)
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" })
+        onSectionChange(id)
+      }
     }
+
+    if (isOpen) setIsOpen(false)
   }
 
   return (
@@ -95,20 +108,43 @@ const Navbar = ({ activeSection, onSectionChange }) => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className={`fixed w-full z-50 transition-all duration-300 ${scrolled
-        ? "bg-[#050A1C]/80 dark:bg-slate-100/80 backdrop-blur-md border-b border-violet-500/20"
-        : "bg-transparent"
-        }`}
+      className={`fixed w-full z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-[#050A1C]/80 dark:bg-slate-100/80 backdrop-blur-md border-b border-violet-500/20"
+          : "bg-transparent"
+      }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0 flex items-center">
-            <button
-              onClick={() => handleNavClick("home")}
-              className="text-xl font-bold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent hover:scale-105 transition-transform duration-300"
-            >
-              Arin Dhimar
-            </button>
+            {isFunPage ? (
+              <div className="flex items-center">
+                {/* <Button
+                  variant="ghost"
+                  onClick={onBack}
+                  className="mr-3 text-gray-400 dark:text-slate-600 hover:text-violet-400 dark:hover:text-violet-600"
+                >
+                  <ArrowLeft className="h-4 w-4 mr-2" />
+                  Back
+                </Button>
+                <span className="text-xl font-bold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">
+                  Fun Stuff
+                </span> */}
+                              <button
+                onClick={() => handleNavClick("home")}
+                className="text-xl font-bold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent hover:scale-105 transition-transform duration-300"
+              >
+                Arin Dhimar
+              </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => handleNavClick("home")}
+                className="text-xl font-bold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent hover:scale-105 transition-transform duration-300"
+              >
+                Arin Dhimar
+              </button>
+            )}
           </div>
 
           <div className="hidden md:flex items-center space-x-4">
@@ -118,10 +154,11 @@ const Navbar = ({ activeSection, onSectionChange }) => {
                   key={link.id}
                   onClick={() => handleNavClick(link.id)}
                   variant={activeSection === link.id ? "ghost2" : "ghost"}
-                  className={`relative ${activeSection === link.id
-                    ? "text-violet-400 dark:text-violet-600"
-                    : "text-gray-300 dark:text-slate-700"
-                    }`}
+                  className={`relative ${
+                    activeSection === link.id
+                      ? "text-violet-400 dark:text-violet-600"
+                      : "text-gray-300 dark:text-slate-700"
+                  }`}
                 >
                   {link.name}
                   {activeSection === link.id && (
@@ -136,7 +173,6 @@ const Navbar = ({ activeSection, onSectionChange }) => {
             </div>
 
             <div className="flex items-center space-x-2 ml-4">
-
               <Button
                 variant="ghost"
                 size="icon"
@@ -197,17 +233,16 @@ const Navbar = ({ activeSection, onSectionChange }) => {
                     <Button
                       onClick={() => handleNavClick(link.id)}
                       variant={activeSection === link.id ? "ghost2" : "ghost"}
-                      className={`w-full justify-start ${activeSection === link.id
-                        ? "text-violet-400 dark:text-violet-600"
-                        : "text-gray-300 dark:text-slate-700"
-                        }`}
+                      className={`w-full justify-start ${
+                        activeSection === link.id
+                          ? "text-violet-400 dark:text-violet-600"
+                          : "text-gray-300 dark:text-slate-700"
+                      }`}
                     >
                       {link.name}
                     </Button>
                   </motion.div>
                 ))}
-
-
               </div>
             </div>
           </motion.div>

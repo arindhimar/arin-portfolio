@@ -14,11 +14,12 @@ import { ThemeProvider } from "./components/ThemeProvider"
 import ParticlesBackground from "./components/ParticlesBackground"
 import GithubActivity from "./components/GithubActivity"
 import SocialSidebar from "./components/SocialSidebar"
-import QuoteSection from "./components/QuoteSection"
+import FunPage from "./pages/FunPage"
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [activeSection, setActiveSection] = useState("home")
+  const [showFunPage, setShowFunPage] = useState(false)
 
   useEffect(() => {
     // Simulate loading time
@@ -31,30 +32,61 @@ function App() {
 
   // Handle navigation
   const handleSectionChange = (section) => {
+    console.log("Section changed to:", section) // Debug log
     setActiveSection(section)
+  }
+
+  const handleFunClick = () => {
+    setShowFunPage(true)
+    setActiveSection("hotwheels") // Start with Hot Wheels instead of overview
+  }
+
+  const handleBackToPortfolio = () => {
+    setShowFunPage(false)
+    setActiveSection("home") // Reset to home when going back to portfolio
   }
 
   return (
     <ThemeProvider>
       <div className="min-h-screen bg-gradient-to-b from-[#050A1C] via-[#0F1A36] to-[#050A1C] dark:from-[#f1f5f9] dark:via-[#e2e8f0] dark:to-[#f1f5f9] text-white dark:text-gray-900">
-        <CustomCursor />
-        <ParticlesBackground />
         <AnimatePresence mode="wait">
           {isLoading ? (
             <Loader key="loader" />
           ) : (
             <>
-              <Navbar activeSection={activeSection} onSectionChange={handleSectionChange} />
-              <SocialSidebar />
-              <main>
-                <Hero />
-                <QuoteSection />
-                <Skills />
-                <Projects />
-                <GithubActivity />
-                <Achievements />
-              </main>
-              <Footer onSectionChange={handleSectionChange} />
+              <CustomCursor />
+              <ParticlesBackground />
+              <Navbar
+                activeSection={activeSection}
+                onSectionChange={handleSectionChange}
+                isFunPage={showFunPage}
+                onBack={handleBackToPortfolio}
+              />
+              <SocialSidebar
+                onFunClick={handleFunClick}
+                onBackClick={handleBackToPortfolio}
+                isOnFunPage={showFunPage}
+              />
+
+              {showFunPage ? (
+                <FunPage
+                  key="funpage"
+                  onBack={handleBackToPortfolio}
+                  activeSection={activeSection}
+                  onSectionChange={handleSectionChange}
+                />
+              ) : (
+                <>
+                  <main>
+                    <Hero />
+                    <Skills />
+                    <Projects />
+                    <GithubActivity />
+                    <Achievements />
+                  </main>
+                  <Footer onSectionChange={handleSectionChange} />
+                </>
+              )}
             </>
           )}
         </AnimatePresence>
