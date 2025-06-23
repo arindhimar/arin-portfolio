@@ -228,7 +228,7 @@ const Hero = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.5 }}
           >
-            <div className="relative">
+            <div className="relative w-64 h-64 md:w-80 md:h-80">
               {/* Decorative elements */}
               <div className="absolute -top-10 -left-10 w-40 h-40 bg-violet-500/20 rounded-full filter blur-3xl animate-pulse"></div>
               <div
@@ -237,7 +237,7 @@ const Hero = () => {
               ></div>
 
               {/* Profile image with glow effect */}
-              <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-violet-500/20 shadow-[0_0_30px_rgba(139,92,246,0.3)]">
+              <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-violet-500/20 shadow-[0_0_30px_rgba(139,92,246,0.3)]">
                 <div className="absolute inset-0 bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20"></div>
                 <img
                   src="https://i.ibb.co/cSPZgxmZ/401721.jpg"
@@ -248,30 +248,48 @@ const Hero = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 dark:from-white/80 to-transparent"></div>
               </div>
 
-              {/* Floating badges */}
+              {/* Static Flask Badge - Top Right */}
               <motion.div
-                className="absolute -top-1 -right-1 bg-[#0A1428]/80 dark:bg-white/80 backdrop-blur-sm border border-violet-500/20 px-3 py-1.5 rounded-full shadow-lg"
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.8, duration: 0.5 }}
+                className="absolute top-4 right-0 bg-[#0A1428]/80 dark:bg-white/80 backdrop-blur-sm border border-violet-500/20 px-3 py-1.5 rounded-full shadow-lg pointer-events-none"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                }}
+                transition={{
+                  opacity: { delay: 0.8, duration: 0.5 },
+                  scale: { delay: 0.8, duration: 0.5 },
+                }}
               >
-                <span className="text-sm font-medium text-violet-400 dark:text-violet-600">Flask</span>
+                <span className="text-sm font-medium text-violet-400 dark:text-violet-600 whitespace-nowrap">
+                  Flask
+                </span>
               </motion.div>
 
+              {/* Static Full-Stack Badge - Bottom Left */}
               <motion.div
-                className="absolute -bottom-5 -left-5 bg-[#0A1428]/80 dark:bg-white/80 backdrop-blur-sm border border-fuchsia-500/20 px-3 py-1.5 rounded-full shadow-lg"
-                initial={{ y: -20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 1, duration: 0.5 }}
+                className="absolute bottom-4 left-0 bg-[#0A1428]/80 dark:bg-white/80 backdrop-blur-sm border border-fuchsia-500/20 px-3 py-1.5 rounded-full shadow-lg pointer-events-none"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                }}
+                transition={{
+                  opacity: { delay: 1, duration: 0.5 },
+                  scale: { delay: 1, duration: 0.5 },
+                }}
               >
-                <span className="text-sm font-medium text-fuchsia-400 dark:text-fuchsia-600">Full-Stack Dev</span>
+                <span className="text-sm font-medium text-fuchsia-400 dark:text-fuchsia-600 whitespace-nowrap">
+                  Full-Stack Dev
+                </span>
               </motion.div>
             </div>
           </motion.div>
         </div>
 
+        {/* Fixed Scroll Down Arrow - Properly Centered */}
         <motion.div
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex justify-center"
           initial={{ opacity: 0, y: -20 }}
           animate={{
             opacity: 1,
@@ -290,10 +308,16 @@ const Hero = () => {
                 repeatType: "loop",
               },
             }}
-            className="flex items-center flex-col"
+            className="flex items-center flex-col cursor-pointer group"
           >
-            <span className="text-sm text-violet-400 dark:text-violet-600 mb-2">Scroll Down</span>
-            <ArrowDown className="h-6 w-6 text-violet-400 dark:text-violet-600" />
+            <span className="text-sm text-violet-400 dark:text-violet-600 mb-2 group-hover:text-violet-300 dark:group-hover:text-violet-700 transition-colors">
+              Scroll Down
+            </span>
+            <div className="relative">
+              <ArrowDown className="h-6 w-6 text-violet-400 dark:text-violet-600 group-hover:text-violet-300 dark:group-hover:text-violet-700 transition-colors" />
+              {/* Glow effect */}
+              <div className="absolute inset-0 h-6 w-6 bg-violet-400/20 dark:bg-violet-600/20 rounded-full blur-sm group-hover:bg-violet-300/30 dark:group-hover:bg-violet-700/30 transition-colors"></div>
+            </div>
           </motion.a>
         </motion.div>
       </div>

@@ -1,11 +1,14 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { useTheme } from "@/components/ThemeProvider"
 
 const Loader = () => {
+  const { theme } = useTheme()
+
   return (
     <motion.div
-      className="fixed inset-0 flex items-center justify-center bg-black z-50"
+      className="fixed inset-0 flex items-center justify-center bg-gradient-to-b from-[#050A1C] via-[#0F1A36] to-[#050A1C] dark:from-[#f1f5f9] dark:via-[#e2e8f0] dark:to-[#f1f5f9] z-50"
       initial={{ opacity: 1 }}
       exit={{
         opacity: 0,
@@ -16,8 +19,12 @@ const Loader = () => {
         <svg className="w-24 h-24" viewBox="0 0 100 100">
           <defs>
             <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#8B5CF6" />
-              <stop offset="100%" stopColor="#D946EF" />
+              <stop offset="0%" stopColor={theme === "dark" ? "#8B5CF6" : "#7C3AED"} />
+              <stop offset="100%" stopColor={theme === "dark" ? "#D946EF" : "#C026D3"} />
+            </linearGradient>
+            <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor={theme === "dark" ? "#8B5CF6" : "#6366F1"} />
+              <stop offset="100%" stopColor={theme === "dark" ? "#A855F7" : "#8B5CF6"} />
             </linearGradient>
           </defs>
 
@@ -51,7 +58,7 @@ const Loader = () => {
             cx="50"
             cy="50"
             r="30"
-            stroke="#8B5CF6"
+            stroke="url(#gradient2)"
             strokeWidth="3"
             fill="none"
             initial={{ pathLength: 0, rotate: 0 }}
@@ -84,14 +91,14 @@ const Loader = () => {
             transition: { delay: 0.5, duration: 0.5 },
           }}
         >
-          <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-fuchsia-400">
+          <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-fuchsia-400 dark:from-violet-600 dark:to-fuchsia-600">
             AD
           </span>
         </motion.div>
       </div>
 
       <motion.p
-        className="absolute bottom-20 text-sm text-violet-400 tracking-widest"
+        className="absolute bottom-20 text-sm text-violet-400 dark:text-violet-600 tracking-widest"
         initial={{ opacity: 0, y: 10 }}
         animate={{
           opacity: [0, 1, 0],

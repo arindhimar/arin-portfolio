@@ -103,6 +103,106 @@ const Navbar = ({ activeSection, onSectionChange, isFunPage = false, onBack }) =
     if (isOpen) setIsOpen(false)
   }
 
+  // Animated Theme Toggle Component
+  const AnimatedThemeToggle = () => (
+    <motion.button
+      onClick={toggleTheme}
+      className="relative p-2 rounded-full bg-gradient-to-r from-violet-500/20 to-fuchsia-500/20 dark:from-amber-500/20 dark:to-orange-500/20 border border-violet-500/30 dark:border-amber-500/30 backdrop-blur-sm overflow-hidden group"
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.9 }}
+      aria-label="Toggle theme"
+    >
+      {/* Animated background gradient */}
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-r from-violet-500/30 to-fuchsia-500/30 dark:from-amber-500/30 dark:to-orange-500/30"
+        animate={{
+          x: ["-100%", "100%"],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Number.POSITIVE_INFINITY,
+          ease: "linear",
+        }}
+      />
+
+      {/* Glow effect */}
+      <motion.div
+        className="absolute inset-0 rounded-full"
+        animate={{
+          boxShadow:
+            theme === "dark"
+              ? ["0 0 0px rgba(139, 92, 246, 0)", "0 0 20px rgba(139, 92, 246, 0.4)", "0 0 0px rgba(139, 92, 246, 0)"]
+              : ["0 0 0px rgba(245, 158, 11, 0)", "0 0 20px rgba(245, 158, 11, 0.4)", "0 0 0px rgba(245, 158, 11, 0)"],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Number.POSITIVE_INFINITY,
+          ease: "easeInOut",
+        }}
+      />
+
+      {/* Icon container without rotation that flips the moon */}
+      <motion.div className="relative z-10">
+        <AnimatePresence mode="wait">
+          {theme === "dark" ? (
+            <motion.div
+              key="sun"
+              initial={{ opacity: 0, scale: 0.5, rotate: -180 }}
+              animate={{ opacity: 1, scale: 1, rotate: 0 }}
+              exit={{ opacity: 0, scale: 0.5, rotate: 180 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Sun className="h-5 w-5 text-amber-400" />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="moon"
+              initial={{ opacity: 0, scale: 0.5, rotate: 180 }}
+              animate={{ opacity: 1, scale: 1, rotate: 0 }}
+              exit={{ opacity: 0, scale: 0.5, rotate: -180 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Moon className="h-5 w-5 text-violet-400" />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+
+      {/* Sparkle effects */}
+      <motion.div
+        className="absolute top-1 right-1"
+        animate={{
+          scale: [0, 1, 0],
+          opacity: [0, 1, 0],
+        }}
+        transition={{
+          duration: 1.5,
+          repeat: Number.POSITIVE_INFINITY,
+          ease: "easeInOut",
+          delay: 0.5,
+        }}
+      >
+        <div className="w-1 h-1 bg-violet-400 dark:bg-amber-400 rounded-full"></div>
+      </motion.div>
+
+      <motion.div
+        className="absolute bottom-1 left-1"
+        animate={{
+          scale: [0, 1, 0],
+          opacity: [0, 1, 0],
+        }}
+        transition={{
+          duration: 1.5,
+          repeat: Number.POSITIVE_INFINITY,
+          ease: "easeInOut",
+          delay: 1,
+        }}
+      >
+        <div className="w-1 h-1 bg-violet-400 dark:bg-amber-400 rounded-full"></div>
+      </motion.div>
+    </motion.button>
+  )
+
   return (
     <motion.nav
       initial={{ y: -100 }}
@@ -119,7 +219,7 @@ const Navbar = ({ activeSection, onSectionChange, isFunPage = false, onBack }) =
           <div className="flex-shrink-0 flex items-center">
             {isFunPage ? (
               <div className="flex items-center">
-                {/* <Button
+                <Button
                   variant="ghost"
                   onClick={onBack}
                   className="mr-3 text-gray-400 dark:text-slate-600 hover:text-violet-400 dark:hover:text-violet-600"
@@ -129,13 +229,7 @@ const Navbar = ({ activeSection, onSectionChange, isFunPage = false, onBack }) =
                 </Button>
                 <span className="text-xl font-bold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">
                   Fun Stuff
-                </span> */}
-                              <button
-                onClick={() => handleNavClick("home")}
-                className="text-xl font-bold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent hover:scale-105 transition-transform duration-300"
-              >
-                Arin Dhimar
-              </button>
+                </span>
               </div>
             ) : (
               <button
@@ -173,28 +267,12 @@ const Navbar = ({ activeSection, onSectionChange, isFunPage = false, onBack }) =
             </div>
 
             <div className="flex items-center space-x-2 ml-4">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={toggleTheme}
-                className="ml-2 text-gray-400 dark:text-slate-600 hover:text-violet-400 dark:hover:text-violet-600"
-                aria-label="Toggle theme"
-              >
-                {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-              </Button>
+              <AnimatedThemeToggle />
             </div>
           </div>
 
           <div className="flex md:hidden items-center space-x-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggleTheme}
-              aria-label="Toggle theme"
-              className="text-gray-400 dark:text-slate-600"
-            >
-              {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-            </Button>
+            <AnimatedThemeToggle />
 
             <Button
               variant="ghost"
