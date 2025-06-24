@@ -73,17 +73,17 @@ const Navbar = ({ activeSection, onSectionChange, isFunPage = false, onBack }) =
   // Navigation links based on page type
   const navLinks = isFunPage
     ? [
-        { name: "Hot Wheels", id: "hotwheels" },
-        { name: "Anime", id: "anime" },
-        { name: "Quotes", id: "quotes" },
-      ]
+      { name: "Hot Wheels", id: "hotwheels" },
+      { name: "Anime", id: "anime" },
+      { name: "Quotes", id: "quotes" },
+    ]
     : [
-        { name: "Home", id: "home" },
-        { name: "Skills", id: "skills" },
-        { name: "Projects", id: "projects" },
-        { name: "GitHub", id: "github-activity" },
-        { name: "Achievements", id: "achievements" },
-      ]
+      { name: "Home", id: "home" },
+      { name: "Skills", id: "skills" },
+      { name: "Projects", id: "projects" },
+      { name: "GitHub", id: "github-activity" },
+      { name: "Achievements", id: "achievements" },
+    ]
 
   const handleNavClick = (id) => {
     console.log("Nav clicked:", id) // Debug log
@@ -208,28 +208,22 @@ const Navbar = ({ activeSection, onSectionChange, isFunPage = false, onBack }) =
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className={`fixed w-full z-50 transition-all duration-300 ${
-        scrolled
+      className={`fixed w-full z-50 transition-all duration-300 ${scrolled
           ? "bg-[#050A1C]/80 dark:bg-slate-100/80 backdrop-blur-md border-b border-violet-500/20"
           : "bg-transparent"
-      }`}
+        }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0 flex items-center">
             {isFunPage ? (
               <div className="flex items-center">
-                <Button
-                  variant="ghost"
-                  onClick={onBack}
-                  className="mr-3 text-gray-400 dark:text-slate-600 hover:text-violet-400 dark:hover:text-violet-600"
+                <button
+                  onClick={() => handleNavClick("home")}
+                  className="text-xl font-bold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent hover:scale-105 transition-transform duration-300"
                 >
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Back
-                </Button>
-                <span className="text-xl font-bold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">
-                  Fun Stuff
-                </span>
+                  Arin Dhimar
+                </button>
               </div>
             ) : (
               <button
@@ -248,11 +242,10 @@ const Navbar = ({ activeSection, onSectionChange, isFunPage = false, onBack }) =
                   key={link.id}
                   onClick={() => handleNavClick(link.id)}
                   variant={activeSection === link.id ? "ghost2" : "ghost"}
-                  className={`relative ${
-                    activeSection === link.id
+                  className={`relative ${activeSection === link.id
                       ? "text-violet-400 dark:text-violet-600"
                       : "text-gray-300 dark:text-slate-700"
-                  }`}
+                    }`}
                 >
                   {link.name}
                   {activeSection === link.id && (
@@ -311,11 +304,10 @@ const Navbar = ({ activeSection, onSectionChange, isFunPage = false, onBack }) =
                     <Button
                       onClick={() => handleNavClick(link.id)}
                       variant={activeSection === link.id ? "ghost2" : "ghost"}
-                      className={`w-full justify-start ${
-                        activeSection === link.id
+                      className={`w-full justify-start ${activeSection === link.id
                           ? "text-violet-400 dark:text-violet-600"
                           : "text-gray-300 dark:text-slate-700"
-                      }`}
+                        }`}
                     >
                       {link.name}
                     </Button>
