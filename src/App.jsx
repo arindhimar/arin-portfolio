@@ -15,6 +15,7 @@ import ParticlesBackground from "./components/ParticlesBackground"
 import GithubActivity from "./components/GithubActivity"
 import SocialSidebar from "./components/SocialSidebar"
 import FunPage from "./pages/FunPage"
+import StickyNote from "./components/StickyNote"
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
@@ -56,6 +57,7 @@ function App() {
             <>
               <CustomCursor />
               <ParticlesBackground />
+              <StickyNote />
               <Navbar
                 activeSection={activeSection}
                 onSectionChange={handleSectionChange}

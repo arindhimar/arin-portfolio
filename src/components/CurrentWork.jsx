@@ -17,20 +17,20 @@ const CurrentWork = () => {
     try {
       const username = "arindhimar" // Replace with your GitHub username
       const [userRes, reposRes] = await Promise.all([
-        fetch(`https://api.github.com/users/${arindhimar}`),
-        fetch(`https://api.github.com/users/${arindhimar}/repos?sort=updated&per_page=3`)
+        fetch(`https://api.github.com/users/${username}`),
+        fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=3`),
       ])
-      
+
       if (!userRes.ok || !reposRes.ok) throw new Error("GitHub API error")
-      
+
       const userData = await userRes.json()
       const reposData = await reposRes.json()
 
       // For contributions, you might need to use GitHub's GraphQL API
       // This is a simplified example - consider using a library like 'github-contributions-api'
-      const contributions = await fetch(`https://github-contributions-api.deno.dev/${arindhimar}`)
-        .then(res => res.json())
-        .then(data => data.totalContributions || 0)
+      const contributions = await fetch(`https://github-contributions-api.deno.dev/${username}`)
+        .then((res) => res.json())
+        .then((data) => data.totalContributions || 0)
         .catch(() => 0)
 
       return {
@@ -38,13 +38,13 @@ const CurrentWork = () => {
         streak: await fetchGitHubStreak(username),
         repos: userData.public_repos,
         stars: reposData.reduce((sum, repo) => sum + repo.stargazers_count, 0),
-        recentRepos: reposData.map(repo => ({
+        recentRepos: reposData.map((repo) => ({
           name: repo.name,
           language: repo.language || "Unknown",
           stars: repo.stargazers_count,
-          forks: repo.forks_count
+          forks: repo.forks_count,
         })),
-        heatmap: generateHeatmapData()
+        heatmap: generateHeatmapData(),
       }
     } catch (error) {
       console.error("GitHub fetch error:", error)
@@ -65,8 +65,8 @@ const CurrentWork = () => {
       const date = new Date()
       date.setDate(date.getDate() - i)
       days.push({
-        date: date.toISOString().split('T')[0],
-        count: Math.floor(Math.random() * 10) // Replace with real data
+        date: date.toISOString().split("T")[0],
+        count: Math.floor(Math.random() * 10), // Replace with real data
       })
     }
     return days
@@ -86,10 +86,18 @@ const CurrentWork = () => {
         streak: Math.floor(Math.random() * 30) + 1,
         badges: ["Problem Solver", "30 Days Streak", "Contest Participant"],
         recentProblems: [
-          { name: "Minimum Spanning Tree", difficulty: "Medium", date: new Date().toISOString().split('T')[0] },
-          { name: "Detect Cycle in Graph", difficulty: "Medium", date: new Date(Date.now() - 86400000 * 2).toISOString().split('T')[0] },
-          { name: "Longest Common Subsequence", difficulty: "Hard", date: new Date(Date.now() - 86400000 * 5).toISOString().split('T')[0] }
-        ]
+          { name: "Minimum Spanning Tree", difficulty: "Medium", date: new Date().toISOString().split("T")[0] },
+          {
+            name: "Detect Cycle in Graph",
+            difficulty: "Medium",
+            date: new Date(Date.now() - 86400000 * 2).toISOString().split("T")[0],
+          },
+          {
+            name: "Longest Common Subsequence",
+            difficulty: "Hard",
+            date: new Date(Date.now() - 86400000 * 5).toISOString().split("T")[0],
+          },
+        ],
       }
     } catch (error) {
       console.error("GFG fetch error:", error)
@@ -100,31 +108,23 @@ const CurrentWork = () => {
   // Fetch WakaTime data
   const fetchWakaTimeData = async () => {
     try {
-      const username = "arindhimar" // Replace with your WakaTime username
-      const apiKey = process.env.NEXT_PUBLIC_WAKATIME_API_KEY // Set in your environment
-      
-      if (!apiKey) throw new Error("WakaTime API key missing")
-      
-      const statsRes = await fetch(`https://wakatime.com/api/v1/users/${username}/stats/last_7_days`, {
-        headers: { Authorization: `Basic ${btoa(apiKey)}` }
-      })
-      
-      if (!statsRes.ok) throw new Error("WakaTime API error")
-      
-      const statsData = await statsRes.json()
-      
+      // Mock WakaTime data
       return {
-        totalHours: Math.round(statsData.data.total_seconds / 3600) || 0,
-        dailyAverage: (statsData.data.daily_average / 3600).toFixed(1) || "0.0",
-        languages: statsData.data.languages?.slice(0, 5).map(lang => ({
-          name: lang.name,
-          percent: lang.percent
-        })) || [],
-        editors: statsData.data.editors?.slice(0, 3).map(editor => ({
-          name: editor.name,
-          percent: editor.percent
-        })) || [],
-        weeklyActivity: generateWeeklyActivity(statsData)
+        totalHours: 42,
+        dailyAverage: "6.0",
+        languages: [
+          { name: "JavaScript", percent: 45 },
+          { name: "Python", percent: 25 },
+          { name: "CSS", percent: 15 },
+          { name: "HTML", percent: 10 },
+          { name: "Other", percent: 5 },
+        ],
+        editors: [
+          { name: "VS Code", percent: 75 },
+          { name: "WebStorm", percent: 15 },
+          { name: "Vim", percent: 10 },
+        ],
+        weeklyActivity: generateWeeklyActivity(),
       }
     } catch (error) {
       console.error("WakaTime fetch error:", error)
@@ -133,40 +133,13 @@ const CurrentWork = () => {
   }
 
   // Generate weekly activity data
-  const generateWeeklyActivity = (statsData) => {
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-    return days.map(day => ({
+  const generateWeeklyActivity = () => {
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    return days.map((day) => ({
       day,
-      hours: parseFloat((Math.random() * 8).toFixed(1)) // Replace with actual data
+      hours: Number.parseFloat((Math.random() * 8).toFixed(1)),
     }))
   }
-
-  // Main data fetching effect
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true)
-      setError(null)
-      
-      try {
-        const [github, gfg, wakatime] = await Promise.all([
-          fetchGitHubData(),
-          fetchGFGData(),
-          fetchWakaTimeData()
-        ])
-        
-        setGithubData(github)
-        setGfgData(gfg)
-        setWakaTimeData(wakatime)
-      } catch (err) {
-        console.error("Failed to fetch data:", err)
-        setError("Failed to load data. Please try again later.")
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchData()
-  }, [])
 
   // Render contribution cells
   const renderContributionCell = (count) => {
@@ -226,14 +199,32 @@ const CurrentWork = () => {
     { id: "wakatime", label: "WakaTime", icon: <Clock className="h-5 w-5" /> },
   ]
 
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true)
+      setError(null)
+
+      try {
+        const [github, gfg, wakatime] = await Promise.all([fetchGitHubData(), fetchGFGData(), fetchWakaTimeData()])
+
+        setGithubData(github)
+        setGfgData(gfg)
+        setWakaTimeData(wakatime)
+      } catch (err) {
+        console.error("Failed to fetch data:", err)
+        setError("Failed to load data. Please try again later.")
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
+
   return (
     <section id="current-work" className="py-20 min-h-screen flex items-center bg-[#050A1C]">
       <div className="container mx-auto px-4">
-        {error && (
-          <div className="bg-red-900/30 text-red-400 p-4 rounded-lg mb-6">
-            {error}
-          </div>
-        )}
+        {error && <div className="bg-red-900/30 text-red-400 p-4 rounded-lg mb-6">{error}</div>}
 
         <motion.div
           className="text-center mb-16"
@@ -407,7 +398,7 @@ const CurrentWork = () => {
                                 <svg className="w-4 h-4 text-gray-400 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                   <path
                                     fillRule="evenodd"
-                                    d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z"
+                                    d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 01.951-.69l1.07-3.292z"
                                     clipRule="evenodd"
                                   ></path>
                                 </svg>
